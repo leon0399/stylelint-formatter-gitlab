@@ -13,7 +13,7 @@ const {
   CI_JOB_NAME,
   CI_PROJECT_DIR = process.cwd(),
   STYLELINT_CODE_QUALITY_REPORT,
-  STYLELINT_FORMATTER
+  STYLELINT_FORMATTER = 'string'
 } = process.env
 
 function getOutputPath() {
