@@ -36,7 +36,8 @@ license_management:
   allow_failure: true
 
 .test:
-  script: yarn test -- --reporters default --reporters jest-junit
+  script: yarn test -- --reporters default --reporters jest-junit --coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
   artifacts:
     reports:
       junit: junit.xml
