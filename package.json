@@ -10,6 +10,13 @@
   "bugs": {
     "url": "https://gitlab.com/leon0399/stylelint-formatter-gitlab/issues"
   },
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "lint": "eslint --ext .js --ignore-path .gitignore .",
+    "test": "jest"
+  },
   "keywords": [
     "stylelint",
     "stylelint-formatter",
@@ -18,5 +25,25 @@
     "gitlab-ci"
   ],
   "author": "Leonid Meleshin <leon.03.99@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.6.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^25.1.0",
+    "jest-junit": "^10.0.0",
+    "prettier": "^1.19.1",
+    "stylelint": "^13.0.0"
+  },
+  "peerDependencies": {
+    "stylelint": ">=9"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "is-glob": "^4.0.1",
+    "js-yaml": "^3.13.1"
+  }
 }
