@@ -1,0 +1,47 @@
+stages:
+  - test
+  - publish
+
+before_script:
+  - yarn install --prefer-offline --no-progress --non-interactive --frozen-lockfile
+
+eslint:
+  script: yarn lint --format gitlab
+  artifacts:
+    reports:
+      codequality: gl-codequality.json
+
+dependency scanning:
+  script:
+    - yarn audit --json | yarn gitlab-ci-yarn-audit-parser -o gl-dependency-scanning.json
+  artifacts:
+    reports:
+      dependency_scanning: gl-dependency-scanning.json
+  allow_failure: true
+
+license_management:
+  stage: test
+  script:
+    - npx license-checker --json | npx gitlab-ci-license-checker-parser -o gl-license-management-report.json
+  artifacts:
+    reports:
+      license_management: gl-license-management-report.json
+  allow_failure: true
+
+.test:
+  script: yarn test -- --reporters default --reporters jest-junit
+  artifacts:
+    reports:
+      junit: junit.xml
+
+test:node:8:
+  extends: .test
+  image: node:8-alpine
+
+test:node:10:
+  extends: .test
+  image: node:10-alpine
+
+test:node:12:
+  extends: .test
+  image: node:12-alpine
