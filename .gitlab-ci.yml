@@ -4,6 +4,11 @@ stages:
 
 image: node:10-alpine
 
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - node_modules/
+
 before_script:
   - yarn install --prefer-offline --no-progress --non-interactive --frozen-lockfile
 
@@ -36,10 +41,6 @@ license_management:
     reports:
       junit: junit.xml
 
-test:node:8:
-  extends: .test
-  image: node:8-alpine
-
 test:node:10:
   extends: .test
   image: node:10-alpine
@@ -47,3 +48,11 @@ test:node:10:
 test:node:12:
   extends: .test
   image: node:12-alpine
+
+publish:
+  stage: publish
+  only:
+    - tags
+  script:
+    - npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+    - npm publish
