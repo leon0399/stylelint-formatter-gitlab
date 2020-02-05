@@ -1,0 +1,8 @@
+{
+  "name": "stylelint-formatter-gitlab",
+  "version": "1.0.0",
+  "description": "Show Stylelint results directly in the GitLab code quality results",
+  "repository": "https://github.com/leon0399/stylelint-formatter-gitlab",
+  "author": "Leonid Meleshin <leon.03.99@gmail.com>",
+  "license": "MIT"
+}
