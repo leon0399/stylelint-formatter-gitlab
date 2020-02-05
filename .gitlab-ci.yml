@@ -2,6 +2,8 @@ stages:
   - test
   - publish
 
+image: node:10-alpine
+
 before_script:
   - yarn install --prefer-offline --no-progress --non-interactive --frozen-lockfile
 
