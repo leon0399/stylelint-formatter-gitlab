@@ -1,5 +1,8 @@
 # Stylelint Formatter for GitLab
 
+[![pipeline status](https://gitlab.com/leon0399/stylelint-formatter-gitlab/badges/master/pipeline.svg)](https://gitlab.com/leon0399/stylelint-formatter-gitlab/-/commits/master)
+[![coverage report](https://gitlab.com/leon0399/stylelint-formatter-gitlab/badges/master/coverage.svg)](https://gitlab.com/leon0399/stylelint-formatter-gitlab/-/commits/master)
+
 > Show ESLint results directly in the [GitLab code quality] results
 
 [gitlab code quality]: https://docs.gitlab.com/ee/user/project/merge_requests/code_quality.html
@@ -28,7 +31,7 @@ stylelint:
   image: node:10-alpine
   script:
     - npm ci
-    - npx stylelint --formatter gitlab .
+    - npx stylelint --custom-formatter=node_modules/stylelint-formatter-gitlab .
   artifacts:
     reports:
       codequality: gl-codequality.json
