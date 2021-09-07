@@ -46,6 +46,17 @@ function createFingerprint(filePath, message) {
   return md5.digest('hex')
 }
 
+function mapSeverity(severity) {
+  switch (severity) {
+    case 'error':
+      return 'major'
+    case 'warning':
+      return 'minor'
+    default:
+      return 'minor'
+  }
+}
+
 /**
  * @param {import('stylelint').Warning[]} messages
  * @param {string} source
@@ -54,12 +65,16 @@ function createFingerprint(filePath, message) {
 function formatter(results, source) {
   const relativePath = path.relative(CI_PROJECT_DIR, source)
   return results.map((result) => ({
+    type: 'issue',
+    check_name: result.rule,
+    severity: mapSeverity(result.severity),
     description: result.text,
     fingerprint: createFingerprint(relativePath, result),
     location: {
       path: relativePath,
       lines: {
-        begin: result.line
+        begin: result.line,
+        end: result.line
       }
     }
   }))
