@@ -103,14 +103,19 @@ describe('convert', () => {
     const result = convert([
       {
         source: path.join(process.cwd(), 'filemame.js'),
-        warnings: [{ line: 42, text: 'This is a linting error', rule: 'linting-error' }]
+        warnings: [
+          { line: 42, text: 'This is a linting error', rule: 'linting-error', severity: 'error' }
+        ]
       }
     ])
     expect(result).toStrictEqual([
       {
+        type: 'issue',
+        check_name: 'linting-error',
+        severity: 'major',
         description: 'This is a linting error',
         fingerprint: '4865d2b12aa92583749538a5c966fe61',
-        location: { lines: { begin: 42 }, path: 'filemame.js' }
+        location: { lines: { begin: 42, end: 42 }, path: 'filemame.js' }
       }
     ])
   })
@@ -121,21 +126,32 @@ describe('convert', () => {
       {
         source: path.join(process.cwd(), 'filemame.js'),
         warnings: [
-          { line: 42, text: 'This is a linting error', rule: 'linting-error' },
-          { line: 44, text: 'This is another linting error', rule: 'other-linting-error' }
+          { line: 42, text: 'This is a linting error', rule: 'linting-error', severity: 'error' },
+          {
+            line: 44,
+            text: 'This is another linting error',
+            rule: 'other-linting-error',
+            severity: 'warning'
+          }
         ]
       }
     ])
     expect(result).toStrictEqual([
       {
+        type: 'issue',
+        check_name: 'linting-error',
+        severity: 'major',
         description: 'This is a linting error',
         fingerprint: '4865d2b12aa92583749538a5c966fe61',
-        location: { lines: { begin: 42 }, path: 'filemame.js' }
+        location: { lines: { begin: 42, end: 42 }, path: 'filemame.js' }
       },
       {
+        type: 'issue',
+        check_name: 'other-linting-error',
+        severity: 'minor',
         description: 'This is another linting error',
         fingerprint: '6a6e153c60166dc5dd8a228468ee8512',
-        location: { lines: { begin: 44 }, path: 'filemame.js' }
+        location: { lines: { begin: 44, end: 44 }, path: 'filemame.js' }
       }
     ])
   })
